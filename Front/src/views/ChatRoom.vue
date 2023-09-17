@@ -1,7 +1,7 @@
 <template>
-  <v-container class="py-0 fill-height">
+  <v-container class="py-0 fill-height" :fluid="mobile.expandContainer">
         <v-row lass="slight-opacity">
-          <v-col cols="2">
+          <v-col cols="2" v-if="mobile.showUserColumn">
             <ChatUsers :room-id="gettersVuex.roomId"></ChatUsers>
           </v-col>
           <v-col>
@@ -25,11 +25,17 @@
 import ChatUsers from "@/components/chat/ChatUsers.vue";
 import ChatInput from "@/components/chat/ChatInput.vue";
 import ChatMessages from "@/components/chat/ChatMessages.vue";
+import {mobileMixins} from "@/mixins/mobile-mixins";
 
 export default {
+  mixins: [mobileMixins],
   name: 'ChatRoomView',
   components: {ChatMessages, ChatInput, ChatUsers},
   data: () => ({
+    mobile: {
+      showUserColumn: true,
+      expandContainer: true
+    },
     room: {
       id: 0
     },
@@ -53,6 +59,8 @@ export default {
       senderName: this.user.nickname,
       roomId: this.room.id
     });
+    window.addEventListener('resize', this.onResize, { passive: true });
+    this.onResize();
   },
   methods: {
     setRoomAndUserData(){
@@ -60,6 +68,10 @@ export default {
       this.user.id = this.$store.getters['userStorageModule/getUserId'];
       this.user.nickname = this.$store.getters['userStorageModule/getUserNickname'];
       this.user.accessToken = this.$store.getters['userStorageModule/getAccessToken'];
+    },
+    onResize(){
+      this.mobile.showUserColumn = this.getWindowWidth() > 1400;
+      this.mobile.expandContainer = this.getWindowWidth() < 1880;
     }
   }
 }

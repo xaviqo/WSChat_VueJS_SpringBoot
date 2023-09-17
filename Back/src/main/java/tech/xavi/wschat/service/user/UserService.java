@@ -62,7 +62,7 @@ public class UserService {
                         .stream()
                         .map(data -> RoomUser.builder()
                                 .nickname(data.getUsername())
-                                .avatar(data.getAvatar())
+                                .avatar(data.getAvatar().getAvatar())
                                 .id(user.getChatUserId())
                                 .connected(user.isConnected())
                                 .build()))

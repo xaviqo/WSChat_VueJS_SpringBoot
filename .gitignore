@@ -1,0 +1,75 @@
+# Carpeta de compilación de Maven
+/Back/target/
+
+# Dependencias de Maven
+/Back/.mvn/
+/Back/*.jar
+/Back/*.war
+/Back/*.ear
+/Back/*.class
+
+# Carpeta de compilación de Gradle
+/Back/build/
+
+# Dependencias de Gradle
+/Back/.gradle/
+/Back/build/
+/Back/.gradle
+
+# Carpeta de Node.js
+/Front/node_modules/
+
+# Carpeta de producción de Vue.js
+/Front/dist/
+
+# Archivos generados por IDE
+/Back/.idea/
+/Front/.idea/
+/Back/*.iml
+/Front/*.iml
+/Back/*.ipr
+/Front/*.ipr
+/Back/*.iws
+/Front/*.iws
+/Back/.vscode/
+/Front/.vscode/
+
+# Archivos de configuración
+/Back/*.log
+/Front/*.log
+/Back/*.properties
+/Front/*.properties
+/Back/*.yml
+/Front/*.yml
+/Back/*.yaml
+/Front/*.yaml
+
+# Archivos de compilación
+/Back/*.class
+
+# Archivos de construcción
+/Back/*.jar
+
+# Archivos de configuración del sistema
+/Back/.idea/
+/Back/.vscode/
+/Front/.idea/
+/Front/.vscode/
+
+# Carpetas y archivos de sistemas operativos
+/Back/.DS_Store
+/Front/.DS_Store
+/Back/Thumbs.db
+/Front/Thumbs.db
+
+# Archivo de respaldo de Windows
+/Back/*~
+/Front/*~
+
+# Archivos de registro
+/Back/*.log
+/Front/*.log
+
+# Carpeta de archivos de respaldo
+/backup/
+

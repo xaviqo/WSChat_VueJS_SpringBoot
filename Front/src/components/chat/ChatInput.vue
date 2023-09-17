@@ -1,5 +1,5 @@
 <template>
-    <div id="chat-msg-input" style="height: 6vh" class="greyish-element">
+    <div id="chat-msg-input" style="height: 6vh">
         <v-text-field
                 color="gray"
                 v-model="inputMessage"

@@ -108,11 +108,15 @@
 import {mapGetters} from "vuex";
 import {avatarMixins} from "@/mixins/avatar-mixins";
 import {EventBus} from "@/main";
+import {mobileMixins} from "@/mixins/mobile-mixins";
 
 export default  {
   name: 'ChatRoomJoin',
-  mixins: [avatarMixins],
+  mixins: [avatarMixins, mobileMixins],
   data: () => ({
+    mobile: {
+      mobile: false
+    },
     room: {
       id: 0
     },
@@ -132,8 +136,12 @@ export default  {
   created() {
     this.$store.dispatch('appSettingsModule/loadAppSettings');
     this.getRoomInfo();
+    window.addEventListener('resize', this.onResize, { passive: true });
   },
   methods: {
+    onResize(){
+      this.mobile.mobile = this.getWindowWidth() < 600;
+    },
     getRoomInfo(){
       this.axios.get(`/chat/${this.$route.params.roomId}/join`)
           .then(res => {

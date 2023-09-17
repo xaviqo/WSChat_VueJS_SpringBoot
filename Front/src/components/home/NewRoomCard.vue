@@ -24,7 +24,7 @@
         <v-row
             class="pa-10"
         >
-          <v-col cols="5">
+          <v-col :cols="12">
             <v-text-field
                 v-model="createRoomReq.topic"
                 label="Room name/topic"
@@ -33,7 +33,15 @@
             >
             </v-text-field>
           </v-col>
-          <v-col cols="4">
+          <v-col :cols="mobile.mobile ? 6 : 4">
+            <v-select
+                v-model="createRoomReq.roomCapacity"
+                :items="getRoomCapacitySelect"
+                label="Room capacity"
+                filled
+            ></v-select>
+          </v-col>
+          <v-col :cols="mobile.mobile ? 6 : 5">
             <v-text-field
                 v-model="createRoomReq.nickname"
                 label="Nickname"
@@ -45,7 +53,8 @@
           </v-col>
           <v-col
               class="d-flex justify-space-around"
-              cols="3"
+              :class="mobile.mobile ? 'mt-n6' : ''"
+              :cols="mobile.mobile ? 12 : 3"
           >
             <v-avatar
                 size="56"
@@ -63,7 +72,7 @@
               >
                 <template v-slot:placeholder>
                   <v-row
-                      class="fill-height ma-0"
+                      class="fill-height"
                       align="center"
                       justify="center"
                   >
@@ -93,15 +102,8 @@
               </v-btn>
             </v-avatar>
           </v-col>
-          <v-col cols="4">
-            <v-select
-                v-model="createRoomReq.roomCapacity"
-                :items="getRoomCapacitySelect"
-                label="Room capacity"
-                filled
-            ></v-select>
-          </v-col>
-          <v-col cols="4" class="d-flex justify-center">
+<!--      ########## TODO: V2 ##########
+º         <v-col :cols="mobile.mobile ? 6 : 4" class="d-flex justify-center">
             <div class="mt-n1">
               <v-checkbox
                   label="Password protected"
@@ -109,17 +111,17 @@
               ></v-checkbox>
             </div>
           </v-col>
-          <v-col cols="4" class="d-flex justify-center">
+          <v-col :cols="mobile.mobile ? 6 : 4" class="d-flex justify-center">
             <div class="mt-n1">
               <v-checkbox
                   label="Show in explorer"
                   filled
               ></v-checkbox>
             </div>
-          </v-col>
+          </v-col>-->
           <v-col class="d-flex justify-center">
             <v-btn
-                class="mt-n5"
+                :class="mobile.mobile ? '' : 'mt-n5'"
                 elevation="2"
                 x-large
                 style="border: rgba(128,128,128,.3) 1px solid !important; background-color: rgba(255,255,255,.3) !important;"
@@ -141,10 +143,14 @@
 import {avatarMixins} from "@/mixins/avatar-mixins.js";
 import {mapGetters} from "vuex";
 import {EventBus} from "@/main";
+import {mobileMixins} from "@/mixins/mobile-mixins";
 export default {
   name: "NewRoomCard",
-  mixins: [avatarMixins],
+  mixins: [avatarMixins, mobileMixins],
   data: () => ({
+    mobile: {
+      mobile: false
+    },
     createRoomReq: {
       topic: '',
       nickname: '',
@@ -158,6 +164,8 @@ export default {
   }),
   created() {
     this.$store.dispatch('appSettingsModule/loadAppSettings');
+    window.addEventListener('resize', this.onResize, { passive: true });
+    this.onResize();
   },
   computed:{
     ...mapGetters('appSettingsModule',
@@ -168,6 +176,9 @@ export default {
     )
   },
   methods: {
+    onResize(){
+      this.mobile.mobile = this.getWindowWidth() < 600;
+    },
     pickedAvatar(){
       if (!this.createRoomReq.avatarStyle) this.randomAvatar();
       return this.avatarURL(

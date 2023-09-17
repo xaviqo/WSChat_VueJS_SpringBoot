@@ -18,14 +18,13 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private final String SECRET_KEY;
+    private final Key SECRET_KEY;
     private final String ISSUER;
 
     public JwtService(
-            @Value("${freefastchat.jwt.secret}") String secretKey,
             @Value("${freefastchat.jwt.issuer}") String issuer
     ) {
-        this.SECRET_KEY = secretKey;
+        this.SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         this.ISSUER = issuer;
     }
 
@@ -98,8 +97,6 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        return Keys.hmacShaKeyFor(
-                Decoders.BASE64.decode(SECRET_KEY)
-        );
+        return SECRET_KEY;
     }
 }

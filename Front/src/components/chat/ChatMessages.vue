@@ -1,10 +1,10 @@
 <template>
   <v-card
       flat
-      class="fill-height greyish-element"
+      class="fill-height"
   >
     <v-toolbar
-        class="greyish-element mt-n2"
+        class="mt-n2"
         elevation="0"
     >
       <v-toolbar-title>

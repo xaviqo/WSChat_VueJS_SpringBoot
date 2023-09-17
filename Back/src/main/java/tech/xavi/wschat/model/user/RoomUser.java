@@ -7,7 +7,7 @@ import tech.xavi.wschat.entity.sub.Avatar;
 public record RoomUser(
         String id,
         String nickname,
-        Avatar avatar,
+        String avatar,
         boolean connected
 ) {
 }

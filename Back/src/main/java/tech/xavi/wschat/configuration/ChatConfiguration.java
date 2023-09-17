@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 @Setter
 public class ChatConfiguration {
 
+    public boolean IS_PRODUCTION;
+    public String CORS_URL;
     public final String VERSION = "v1";
     public final String LOG_PREFIX = "[ FFC ] - ";
     public final String PROPERTIES_FILE = "/chatcfg.properties";
@@ -38,7 +40,8 @@ public class ChatConfiguration {
         try {
             final Properties properties = new Properties();
             properties.load(ChatConfiguration.class.getResourceAsStream(PROPERTIES_FILE));
-
+            IS_PRODUCTION = properties.getProperty("freefastchat.cfg.production").equals("true");
+            CORS_URL = IS_PRODUCTION ? properties.getProperty("freefastchat.cfg.url.cors.pro") : properties.getProperty("freefastchat.cfg.url.cors.dev");
             MAX_ROOM_CAPACITY = Integer.parseInt(properties.getProperty("freefastchat.cfg.max-room-capacity"));
             MAX_ROOM_PWD_LENGTH = Integer.parseInt(properties.getProperty("freefastchat.cfg.max-room-pwd-len"));
             MAX_MSG_LENGTH = Integer.parseInt(properties.getProperty("freefastchat.cfg.max-message-len"));
@@ -54,10 +57,11 @@ public class ChatConfiguration {
             ALLOW_URLS = properties.getProperty("freefastchat.spam.allow-urls-default").equalsIgnoreCase("true");
             NO_FILTERED_ROUTES = properties.getProperty("freefast.chat.routes.no-filter").split(",");
             log.info(LOG_PREFIX+"Default configuration successfully loaded");
+            log.info(LOG_PREFIX+"Production mode is: ["+(IS_PRODUCTION ? "ON":"OFF")+"]");
 
         } catch (Exception e) {
             log.error(LOG_PREFIX+"ERROR READING "+this.getClass().getSimpleName()
-                    +" PROPERTIES FILE ");
+                    +" PROPERTIES FILE");
             e.printStackTrace();
         }
     }
