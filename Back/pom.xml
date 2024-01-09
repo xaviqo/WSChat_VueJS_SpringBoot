@@ -11,7 +11,7 @@
 	<groupId>tech.xavi</groupId>
 	<artifactId>wschat</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>wschat</name>
 	<description>wschat</description>
 	<properties>
@@ -48,12 +48,12 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>1.18.30</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-<!--			<scope>provided</scope>-->
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.auth0</groupId>
@@ -79,6 +79,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>${artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
